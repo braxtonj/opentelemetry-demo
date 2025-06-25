@@ -91,10 +91,10 @@
       "description": "Flood the frontend with a large amount of requests.",
       "state": "ENABLED",
       "variants": {
-        "on": 100,
+        "on": 1000,
         "off": 0
       },
-      "defaultVariant": "off"
+      "defaultVariant": "on"
     },
     "imageSlowLoad": {
       "description": "slow loading images in the frontend",

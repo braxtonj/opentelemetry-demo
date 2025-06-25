@@ -1,0 +1,1 @@
+sh mezmo_reset_build_all_system.sh

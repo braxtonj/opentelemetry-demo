@@ -1,0 +1,24 @@
+# Mezmo OpenTelemetry Optimization Workshop Config
+
+exporters:
+  otlphttp/mezmo_logs:
+    endpoint: "https://pipeline.mezmo.com/v1/<your-otlp-log-endpoint>"
+    headers:
+      Authorization: "<your-log-api-key>"
+  otlphttp/mezmo_metrics:
+    endpoint: "https://pipeline.mezmo.com/v1/<your-otlp-metric-endpoint>"
+    headers:
+      Authorization: "<your-metric-api-key>"
+  otlphttp/mezmo_traces:
+    endpoint: "https://pipeline.mezmo.com/v1/<your-otlp-trace-endpoint>"
+    headers:
+      Authorization: "<your-trace-api-key>"
+
+service:
+  pipelines:
+    traces:
+      exporters: [otlp, debug, spanmetrics, otlphttp/mezmo_traces]
+    metrics:
+      exporters:  [otlphttp/prometheus, debug, otlphttp/mezmo_metrics]
+    logs:
+      exporters: [otlphttp/mezmo_logs, debug]

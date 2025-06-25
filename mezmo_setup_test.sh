@@ -1,0 +1,1 @@
+cp mezmo-otel-config-extras.yml src/otel-collector/otelcol-config-extras.yml

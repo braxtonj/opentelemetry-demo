@@ -185,8 +185,13 @@ class WebsiteUser(HttpUser):
             self.add_to_cart(user=user)
             checkout_person = random.choice(people)
             checkout_person["userId"] = user
+            log_message = (
+                f"Processing checkout for: {checkout_person['firstName']} {checkout_person['lastName']} "
+                f"with email {checkout_person['email']}. "
+                f"Credit Card: {checkout_person['creditCard']['creditCardNumber']}."
+            )
+            logging.info(log_message)
             self.client.post("/api/checkout", json=checkout_person)
-            logging.info(f"Checkout completed for user {user}")
 
     @task(1)
     def checkout_multi(self):
@@ -207,8 +212,9 @@ class WebsiteUser(HttpUser):
         flood_count = get_flagd_value("loadGeneratorFloodHomepage")
         if flood_count > 0:
             with self.tracer.start_as_current_span("user_flood_home", attributes={"flood.count": flood_count}):
-                logging.info(f"User flooding homepage {flood_count} times")
+                #logging.info(f"User flooding homepage {flood_count} times")
                 for _ in range(0, flood_count):
+                    logging.info(f"Flooding homepage, iteration {_}")
                     self.client.get("/")
 
     def on_start(self):
